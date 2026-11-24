@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Fit Scorer</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <header class="top" id="top">
+    <button class="icon-btn" id="back" aria-label="Back" hidden>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg>
+    </button>
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#1B2632"/>
+        <path d="M10.5 6.5h8l4.5 4.5v14a1.5 1.5 0 0 1-1.5 1.5h-11a1.5 1.5 0 0 1-1.5-1.5v-17a1.5 1.5 0 0 1 1.5-1.5z" fill="#EEE9DF"/>
+        <path d="M12.6 17.2l2.6 2.6 4.8-5.2" fill="none" stroke="#1B2632" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="23" cy="9" r="3.4" fill="#FFB162" stroke="#1B2632" stroke-width="1.4"/>
+      </svg>
+      <span>Job Fit Scorer</span>
+    </div>
+    <button class="icon-btn" id="open-settings" aria-label="Settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:1.5"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/><circle cx="12" cy="12" r="3"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- Main -->
+    <section class="view" id="v-main" aria-labelledby="h-resume">
+      <div class="block">
+        <h2 id="h-resume">Your resume</h2>
+        <div id="resume-empty">
+          <div class="drop" id="drop">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 13V4M6.5 7.5 10 4l3.5 3.5M4 13.5V16h12v-2.5"/></svg>
+            <p><strong>Drop your resume here</strong></p>
+            <button class="btn" id="choose">Choose a file</button>
+            <p class="meta" id="file-help">PDF, DOCX, TXT or MD. PDF up to 10 MB.</p>
+            <input type="file" id="file" accept=".pdf,.docx,.txt,.md" aria-describedby="file-help" hidden>
+          </div>
+          <button class="text-btn" id="paste-toggle" aria-expanded="false" aria-controls="paste-box">Paste text instead</button>
+          <div id="paste-box" class="paste" hidden>
+            <label for="paste">Resume text</label>
+            <textarea id="paste" rows="8" spellcheck="false"></textarea>
+            <button class="btn" id="paste-save">Use this text</button>
+          </div>
+        </div>
+        <div id="resume-chip" class="file-chip" hidden>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 2.5h5.5L15 6v11.5H6z"/><path d="M11.5 2.5V6H15"/></svg>
+          <div class="file-text"><span id="resume-name" class="file-name"></span><span id="resume-meta" class="meta"></span></div>
+          <button class="text-btn" id="resume-replace">Replace</button>
+          <button class="text-btn danger" id="resume-remove">Remove</button>
+        </div>
+        <p class="err" id="resume-error" role="alert" hidden></p>
+      </div>
+
+      <div class="block">
+        <h2>This page</h2>
+        <div class="page-card" id="page-card">
+          <span id="page-icon" class="icon-slot"></span>
+          <div class="page-text"><span id="page-title" class="page-title">Reading page...</span><span id="page-site" class="meta"></span></div>
+        </div>
+        <button class="btn primary wide" id="start" aria-describedby="start-hint">Start Scoring</button>
+        <p class="hint" id="start-hint"><span id="start-hint-text"></span> <button class="text-btn" id="hint-settings" hidden>Open Settings</button></p>
+        <p class="err" id="start-error" role="alert" hidden></p>
+        <button class="text-btn" id="view-last" hidden></button>
+      </div>
+
+      <div class="block">
+        <h2>Saved jobs <span class="count" id="saved-count">(0)</span></h2>
+        <ul class="saved" id="saved-list"></ul>
+        <p class="empty" id="saved-empty">No saved jobs yet. Score a job post, then press Save to keep it here.</p>
+      </div>
+    </section>
+
+    <!-- Loading -->
+    <section class="view" id="v-loading" hidden aria-busy="true" aria-labelledby="load-title">
+      <h1 class="view-title" id="load-title">Scoring this job</h1>
+      <ul class="steps" id="load-steps" aria-live="polite"></ul>
+      <p class="meta">This usually takes 20 to 90 seconds.</p>
+      <button class="btn" id="cancel">Cancel</button>
+    </section>
+
+    <!-- Results -->
+    <section class="view with-bar" id="v-results" hidden aria-label="Results">
+      <div id="results"></div>
+      <div class="actionbar">
+        <div class="menu-wrap" id="dl-results"></div>
+        <button class="btn primary grow" id="apply">I'll Apply Now</button>
+        <button class="btn" id="save" aria-pressed="false">Save</button>
+      </div>
+    </section>
+
+    <!-- Apply -->
+    <section class="view" id="v-apply" hidden aria-labelledby="apply-title">
+      <h1 class="view-title" id="apply-title">Apply for this job</h1>
+      <p class="meta" id="apply-sub"></p>
+      <p class="hint" id="apply-note" hidden></p>
+      <button class="option rec" id="gen-both">
+        <span class="opt-head"><span class="opt-title">Generate Targeted Resume &amp; Cover Letter</span><span class="pill pos">Recommended</span></span>
+        <span class="opt-desc">A resume tailored to this post and a cover letter addressed to the company, built only from your real experience.</span>
+      </button>
+      <div class="option">
+        <span class="opt-title" id="one-title">Generate one only</span>
+        <div class="seg" role="radiogroup" aria-labelledby="one-title">
+          <label><input type="radio" name="one" value="resume" checked><span>Resume only</span></label>
+          <label><input type="radio" name="one" value="cover_letter"><span>Cover Letter only</span></label>
+        </div>
+        <button class="btn" id="gen-one">Generate</button>
+      </div>
+      <button class="text-btn" id="apply-back">I'll send it personally — Back to Scoring</button>
+      <p class="err" id="apply-error" role="alert" hidden></p>
+    </section>
+
+    <!-- Paste the AI reply (free chat handoff) -->
+    <section class="view" id="v-paste" hidden aria-labelledby="paste-title">
+      <h1 class="view-title" id="paste-title">Paste the AI reply</h1>
+      <ol class="howto">
+        <li>In the <b class="chat-name">claude.ai</b> tab, paste the prompt with <kbd>Ctrl</kbd>+<kbd>V</kbd> and send it.</li>
+        <li>When the answer is done, copy the whole reply.</li>
+        <li>Come back here and paste it below.</li>
+      </ol>
+      <div class="field" id="prompt-box" hidden>
+        <p class="hint">Copying failed. Select the prompt, copy it with <kbd>Ctrl</kbd>+<kbd>C</kbd>, then paste it in the chat.</p>
+        <label for="prompt-text">Prompt</label>
+        <textarea id="prompt-text" rows="6" readonly spellcheck="false"></textarea>
+        <button class="btn" id="prompt-select">Select all</button>
+      </div>
+      <div class="field">
+        <label for="reply">AI reply</label>
+        <textarea id="reply" rows="9" spellcheck="false" placeholder="Paste the whole reply here"></textarea>
+      </div>
+      <p class="err" id="paste-error" role="alert" hidden></p>
+      <button class="btn primary wide" id="paste-go">Show results</button>
+      <div class="row">
+        <button class="btn" id="paste-copy">Copy prompt again</button>
+        <button class="btn" id="paste-open">Open chat again</button>
+      </div>
+      <button class="text-btn" id="paste-cancel">Cancel</button>
+    </section>
+
+    <!-- Generated -->
+    <section class="view with-bar" id="v-generated" hidden aria-labelledby="gen-title">
+      <h1 class="view-title" id="gen-title">Your documents</h1>
+      <div class="tabs" role="tablist" id="gen-tabs" aria-label="Document">
+        <button role="tab" id="tab-resume" data-doc="resume" aria-selected="true">Resume</button>
+        <button role="tab" id="tab-cover" data-doc="cover_letter" aria-selected="false">Cover Letter</button>
+      </div>
+      <label class="sr-only" for="gen-text">Document text</label>
+      <textarea id="gen-text" class="doc" spellcheck="true"></textarea>
+      <p class="meta">Edit freely. Check every line and fill placeholders such as [Phone] before you send it.</p>
+      <div class="actionbar">
+        <button class="btn" id="gen-copy">Copy</button>
+        <div class="menu-wrap" id="dl-gen"></div>
+        <button class="btn grow" id="gen-back">Back to Scoring</button>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="view" id="v-settings" hidden aria-labelledby="settings-title">
+      <h1 class="view-title" id="settings-title">Settings</h1>
+      <div class="field">
+        <label for="engine">AI engine</label>
+        <select id="engine" aria-describedby="engine-help">
+          <option value="handoff">Free – Paste into your AI chat</option>
+          <option value="quick">Free – Quick check (no AI, instant)</option>
+          <option value="api">Claude API key</option>
+        </select>
+        <p class="help" id="engine-help"></p>
+      </div>
+      <div class="field" id="chat-field">
+        <label for="chat-site">Chat site</label>
+        <select id="chat-site" aria-describedby="chat-help">
+          <option value="claude">claude.ai</option>
+          <option value="chatgpt">ChatGPT</option>
+          <option value="gemini">Gemini</option>
+        </select>
+        <p class="help" id="chat-help">Opens in a new tab. Use the free plan of your own account.</p>
+      </div>
+      <div class="api-fields" id="api-fields">
+      <div class="field">
+        <label for="key">Claude API key</label>
+        <div class="joined">
+          <input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-..." aria-describedby="key-help">
+          <button class="btn" id="key-show" aria-pressed="false">Show</button>
+        </div>
+        <p class="help" id="key-help">Stays in this browser's local extension storage and is sent only to api.anthropic.com. Get a key at console.anthropic.com.</p>
+      </div>
+      <div class="field">
+        <label for="model">Model</label>
+        <select id="model">
+          <option value="claude-opus-5-5">Claude Opus 5.5 — Best quality</option>
+          <option value="claude-sonnet-5-5">Claude Sonnet 5.5 — Balanced</option>
+          <option value="claude-haiku-5-5">Claude Haiku 5.5 — Fastest, cheapest</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="effort">Effort</label>
+        <select id="effort" aria-describedby="effort-help">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <p class="help" id="effort-help">Higher effort thinks longer and costs more.</p>
+      </div>
+      </div>
+      <p class="stamp" id="stamp" aria-live="polite"></p>
+      <button class="btn" id="settings-done">Done</button>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="panel.js"></script>
+</body>
+</html>
